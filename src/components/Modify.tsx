@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react'
-import UserInfo from './userInfo'
 
 type Node = { id: string; group: number }
 type Link = { source: string; target: string; value: number }
@@ -18,7 +17,7 @@ type PageProps = {
 };
 
 
-const Modify: React.FC<PageProps> = ({isOpen3, onClose, graphData, setGraphData, node, children}) => {
+const Modify: React.FC<PageProps> = ({isOpen3, onClose, graphData, setGraphData, node}) => {
 if(!isOpen3) return null;
 
 // 1. find all links touching this node:

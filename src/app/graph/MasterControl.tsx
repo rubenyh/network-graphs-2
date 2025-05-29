@@ -17,7 +17,7 @@ type PageProps = {
 };
 
 
-const MasterControl: React.FC<PageProps> = ({isOpen, onClose, graphData, setGraphData, children}) => {
+const MasterControl: React.FC<PageProps> = ({isOpen, onClose, graphData, setGraphData}) => {
 if(!isOpen) return null;
 
   return (

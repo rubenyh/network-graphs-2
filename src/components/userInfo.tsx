@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import ColorEllipses from './colorEllipses'
 import Modify from './Modify'
 
 type Node = { id: string; group: number }
