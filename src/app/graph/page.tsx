@@ -114,6 +114,7 @@ links: [
 
       <AddUser isOpen={isOpen} onClose={() => setOpen(false)} setGraphData={setGraphData} />
       <MasterControl isOpen={isOpen2} onClose={() => setOpen2(false)} graphData={graphData} setGraphData={setGraphData}/>
+
       <div
         ref={containerRef}
         className="w-full h-full overflow-hidden relative cursor-grab active:cursor-grabbing"
@@ -124,6 +125,9 @@ links: [
       >
         <ForceGraph data={graphData} width={dimensions.width} height={dimensions.height}   offset={offset} />
       </div>
+      
+      <div className='bg-black text-white text-lg px-7 py-2 rounded-full cursor-pointer hover:scale-110 transition'>Track</div>
+
     </div>
   )
 }
