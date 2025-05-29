@@ -26,23 +26,23 @@ if(!isOpen3) return null;
   )
 
   // 2. handler to delete a single link
-  const removeLink = (linkToRemove: Link) => {
-  if (!setGraphData) return
+//   const removeLink = (linkToRemove: Link) => {
+//   if (!setGraphData) return
 
-  setGraphData(prev => ({
-    // keep the same nodes array
-    nodes: prev.nodes,
-    // drop any link whose source+target+value all match the one to remove
-    links: prev.links.filter(
-      l =>
-        !(
-          l.source === linkToRemove.source &&
-          l.target === linkToRemove.target &&
-          l.value === linkToRemove.value
-        )
-    ),
-  }))
-}
+//   setGraphData(prev => ({
+//     // keep the same nodes array
+//     nodes: prev.nodes,
+//     // drop any link whose source+target+value all match the one to remove
+//     links: prev.links.filter(
+//       l =>
+//         !(
+//           l.source === linkToRemove.source &&
+//           l.target === linkToRemove.target &&
+//           l.value === linkToRemove.value
+//         )
+//     ),
+//   }))
+// }
 
   return (
     <div
