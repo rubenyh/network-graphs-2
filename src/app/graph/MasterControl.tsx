@@ -26,21 +26,35 @@ if(!isOpen) return null;
       onClick={onClose}
     >
       <div
-        className="bg-white text-black p-20 h-full w-150 relative"
-        onClick={e => e.stopPropagation()}
+      className="bg-white text-black p-6 sm:p-10 md:p-20 h-full w-150 max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl relative overflow-y-auto"
+      onClick={e => e.stopPropagation()}
       >
-        <img src="/cross.svg" alt="cross" 
-        className="absolute top-4 left-4 size-16 cursor-pointer"
+      <img src="/cross.svg" alt="cross" 
+        className="absolute top-3 left-3 size-8 hover:scale-110 sm:size-16 md:size-18 cursor-pointer transition"
         onClick={onClose}
+      />
+      <br className='md:hidden'></br>
+      {graphData.nodes.map(node => (
+        <UserInfo 
+        key={node.id}
+        node={node}
+        graphData={graphData}
+        setGraphData={setGraphData}
         />
-        {graphData.nodes.map(node => (
-          <UserInfo 
-            key={node.id}
-            node={node}
-            graphData={graphData}
-            setGraphData={setGraphData}
-          />
-        ))}
+      ))}
+
+      <div className="bg-[#682121] text-white hover:scale-105 cursor-pointer transition flex items-center justify-center text-2xl font-bold sm:max-w-lg md:max-w-2xl lg:max-w-4xl rounded-2xl h-14 right-100 md:-ml-10 mb-3.5"
+        onClick={() => {
+            if (!setGraphData) return
+            setGraphData({
+          nodes: [],
+          links: [],
+            })
+          }}>
+        Delete All
+      </div>
+
+
       </div>
     </div>
   )

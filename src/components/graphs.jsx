@@ -11,6 +11,10 @@ export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 
     const svg = d3.select(ref.current)
     svg.selectAll("*").remove()
 
+    const gMain = svg.append("g")
+      .attr("class", "pan-group")
+      .attr("transform", `translate(${offset.x},${offset.y})`)
+
     const zoom = d3.zoom()
       .scaleExtent([0.1, 4])
       .on("zoom", (event) => {
@@ -18,9 +22,13 @@ export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 
       })
 
     svg.call(zoom)
-    const gMain = svg.append("g")
-      .attr("class", "pan-group")
-      .attr("transform", `translate(${offset.x},${offset.y})`)
+
+    svg.transition()
+      .duration(350)
+      .call(
+        zoom.transform,
+        d3.zoomIdentity.translate(offset.x, offset.y)
+      )
 
     const defs = svg.append("defs")
     const gridSize = 50
@@ -33,7 +41,7 @@ export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 
     pattern.append("path")
       .attr("d", `M ${gridSize} 0 L 0 0 0 ${gridSize}`)
       .attr("fill", "none")
-      .attr("stroke", "#717171")
+      .attr("stroke", "#A4A3A3")
       .attr("stroke-width", 1)
     const bigSize = Math.max(width, height) * 20
     gMain.append("rect")
@@ -67,29 +75,31 @@ export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 
     const simulation = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id(d => d.id)
         .distance(d => {
-          const r1 = 20 + (linkCounts[d.source.id] || 0) * 5
-          const r2 = 20 + (linkCounts[d.target.id] || 0) * 5
+          const r1 = 20 + (linkCounts[d.source.id] || 0) * 8
+          const r2 = 20 + (linkCounts[d.target.id] || 0) * 8
           return (r1 + r2) * 1.2
         })
       )
       .force("charge", d3.forceManyBody().strength(-300))
-      .force("collide", d3.forceCollide().radius(d => 25 + d.degree * 7))
+      .force("collide", d3.forceCollide().radius(d => 25 + d.degree * 15))
       .force("x", d3.forceX())
       .force("y", d3.forceY())
+      
      const link = gMain.append("g")
-      .attr("stroke", "#999")
-      .attr("stroke-opacity", 0.9)
+      .attr("stroke", "#000000 ")
+      .attr("stroke-opacity", 0.55)
       .selectAll("line")
       .data(links)
       .join("line")
       .attr("stroke-width", d => Math.sqrt(d.value || 0.1))
+      
     const node = gMain.append("g")
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1.5)
+      .attr("stroke", "#FFFFFF")
+      .attr("stroke-width", 2)
       .selectAll("circle")
       .data(nodes)
       .join("circle")
-      .attr("r", d => 20 + d.degree * 5)
+      .attr("r", d => (3.5 + d.degree) * 5)
       .attr("fill", d => d.color)
       .call(d3.drag()
         .on("start", dragstarted)
@@ -98,8 +108,8 @@ export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 
       )
     node.append("title").text(d => d.id)
     const label = gMain.append("g")
-      .attr("font-family", "sans-serif")
-      .attr("font-size", 12)
+      .attr("font-family", "Itim")
+      .attr("font-size", 15)
       .attr("text-anchor", "middle")
       .selectAll("text")
       .data(nodes)
