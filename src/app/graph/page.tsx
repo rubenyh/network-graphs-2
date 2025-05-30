@@ -11,10 +11,18 @@ type Link = { source: string; target: string; value: number }
 export default function Graph() {
   const [isOpen, setOpen] = useState(false)
   const [isOpen2, setOpen2] = useState(false)
+  const [isActive, setActive] = useState(false)
   const [offset, setOffset] = useState({ x: 0, y: 0 })
+  // const [selected, setSelected] = useState<string[]>()
+
   const dragStart = useRef({ x: 0, y: 0 })
   const isDragging = useRef(false)
 
+  // function handleNodoClick(id: string){
+  //   setSelected(prev => {
+  //     if(prev.)
+  //   })
+  // }
   function onMouseDown(e: React.MouseEvent<HTMLDivElement>) {
     isDragging.current = true
     dragStart.current = { x: e.clientX - offset.x, y: e.clientY - offset.y }
@@ -123,10 +131,24 @@ links: [
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseUp}
       >
-        <ForceGraph data={graphData} width={dimensions.width} height={dimensions.height}   offset={offset} />
+        <ForceGraph data={graphData} width={dimensions.width} height={dimensions.height} offset={offset} />
       </div>
       
-      <div className='bg-black text-white text-lg px-7 py-2 rounded-full cursor-pointer hover:scale-110 transition'>Track</div>
+      {isActive ? (
+        <button
+          onClick={() => setActive(false)}
+          className="fixed bottom-3 right-3 md:bottom-6 md:right-6 bg-red-800 text-white text-lg px-7 py-2 rounded-full cursor-pointer hover:scale-110 transition shadow-lg z-10"
+        >
+          X
+        </button>
+      ) : (
+        <button
+          onClick={() => setActive(true)}
+          className="fixed bottom-3 right-3 md:bottom-6 md:right-6 bg-black text-white text-lg px-7 py-2 rounded-full cursor-pointer hover:scale-110 transition shadow-lg z-10"
+        >
+          Track
+        </button>
+      )}
 
     </div>
   )
