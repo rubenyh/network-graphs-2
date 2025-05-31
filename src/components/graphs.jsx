@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react"
 import * as d3 from "d3"
 
-export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 } }) {
+export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 }, onNodeClick, showPath = [any], isActive}) {
   const ref = useRef(null)
   const nodeColors = useRef({})
 
@@ -92,6 +92,20 @@ export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 
       .data(links)
       .join("line")
       .attr("stroke-width", d => Math.sqrt(d.value || 0.1))
+      .attr("stroke", (d) => {if(isActive){
+      for (let i = 0; i < showPath.length - 1; i++) {
+        const a = showPath[i];
+        const b = showPath[i + 1];
+        if (
+          (d.source.id === a && d.target.id === b) ||
+          (d.source.id === b && d.target.id === a)
+        ) {
+          return "#FF0000"; 
+        }
+      }
+      return "#000000";
+    }});
+
       
     const node = gMain.append("g")
       .attr("stroke", "#FFFFFF")
@@ -100,7 +114,14 @@ export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 
       .data(nodes)
       .join("circle")
       .attr("r", d => (3.5 + d.degree) * 5)
-      .attr("fill", d => d.color)
+      .attr("fill", (d) =>
+        (showPath.includes(d.id) && isActive)  ? "orange" : d.color
+      )
+      .on("click", (event, d) => {
+        if (typeof onNodeClick === "function" && isActive) {
+          onNodeClick(d.id)
+        }
+      })
       .call(d3.drag()
         .on("start", dragstarted)
         .on("drag", dragged)
@@ -152,7 +173,7 @@ export default function ForceGraph({ data, width, height, offset = { x: 0, y: 0 
     }
 
     return () => simulation.stop()
-  }, [data, width, height, offset])
+  }, [data, width, height, offset, showPath, onNodeClick])
 
   return <svg ref={ref} />
 }

@@ -29,11 +29,16 @@ if(!isOpen) return null;
       className="bg-white text-black p-6 sm:p-10 md:p-20 h-full w-150 max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl relative overflow-y-auto"
       onClick={e => e.stopPropagation()}
       >
-      <img src="/cross.svg" alt="cross" 
-        className="absolute top-3 left-3 size-8 hover:scale-110 sm:size-16 md:size-18 cursor-pointer transition"
+      <button
+        className="absolute top-4 left-5 hover:scale-120 hover:text-red-800 sm:text-4xl text-4xl md:text-5xl cursor-pointer transition"
         onClick={onClose}
-      />
+      >
+        X
+      </button>
+
       <br className='md:hidden'></br>
+      <br className='md:hidden'></br>
+
       {graphData.nodes.map(node => (
         <UserInfo 
         key={node.id}

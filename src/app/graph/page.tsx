@@ -4,6 +4,7 @@ import Link from 'next/link'
 import ForceGraph from '../../components/graphs'
 import MasterControl from './MasterControl'
 import AddUser from './AddUser'
+import findShortestPath from '../../components/path'
 
 type Node = { id: string; group: number }
 type Link = { source: string; target: string; value: number }
@@ -13,16 +14,18 @@ export default function Graph() {
   const [isOpen2, setOpen2] = useState(false)
   const [isActive, setActive] = useState(false)
   const [offset, setOffset] = useState({ x: 0, y: 0 })
-  // const [selected, setSelected] = useState<string[]>()
+  const [selected, setSelected] = useState<string[]>([])
 
   const dragStart = useRef({ x: 0, y: 0 })
   const isDragging = useRef(false)
 
-  // function handleNodoClick(id: string){
-  //   setSelected(prev => {
-  //     if(prev.)
-  //   })
-  // }
+  function handleNodeClick(id: string){
+    setSelected(prev => {
+      if(prev.length === 2) return [id]
+      if(prev.includes(id)) return prev
+      return [...prev, id]
+    })
+  }
   function onMouseDown(e: React.MouseEvent<HTMLDivElement>) {
     isDragging.current = true
     dragStart.current = { x: e.clientX - offset.x, y: e.clientY - offset.y }
@@ -93,6 +96,11 @@ links: [
 ]
   })
 
+const path = React.useMemo(() => {
+  if (selected.length < 2) return []
+  return findShortestPath(graphData, selected[0], selected[1])
+}, [selected, graphData])
+
   const containerRef = useRef<HTMLDivElement>(null)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   useEffect(() => {
@@ -131,7 +139,15 @@ links: [
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseUp}
       >
-        <ForceGraph data={graphData} width={dimensions.width} height={dimensions.height} offset={offset} />
+        <ForceGraph 
+          data={graphData} 
+          width={dimensions.width} 
+          height={dimensions.height} 
+          offset={offset} 
+          onNodeClick={handleNodeClick}
+          showPath={path}
+          isActive = {isActive}
+        />
       </div>
       
       {isActive ? (
