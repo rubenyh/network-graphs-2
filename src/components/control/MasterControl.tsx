@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react'
-import UserInfo from './userInfo'
+import UserInfo from '@/components/ui/userInfo'
 import { Links, Node } from "@/types/Nodes"
 
 type PageProps = {

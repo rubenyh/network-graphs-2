@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Modify from './Modify'
+import Modify from '@/components/control/Modify'
 import { Links, Node } from "@/types/Nodes"
 
 interface UserInfoProps{
