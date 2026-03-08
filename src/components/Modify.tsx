@@ -1,16 +1,14 @@
 'use client';
 
 import React from 'react'
-
-type Node = { id: string; group: number }
-type Link = { source: string; target: string; value: number }
+import { Node, Links } from "@/types/Nodes"
 
 type PageProps = {
   isOpen3: boolean;
   onClose: () => void;
-  graphData: { nodes: Node[]; links: Link[] }
+  graphData: { nodes: Node[]; links: Links[] }
   setGraphData?: React.Dispatch<
-    React.SetStateAction<{ nodes: Node[]; links: Link[] }>
+    React.SetStateAction<{ nodes: Node[]; links: Links[] }>
   >
   node: Node
   children?: React.ReactNode;
@@ -20,29 +18,10 @@ type PageProps = {
 const Modify: React.FC<PageProps> = ({isOpen3, onClose, graphData, setGraphData, node}) => {
 if(!isOpen3) return null;
 
-// 1. find all links touching this node:
   const connections = graphData.links.filter(
     (l) => l.source === node.id || l.target === node.id
   )
 
-  // 2. handler to delete a single link
-//   const removeLink = (linkToRemove: Link) => {
-//   if (!setGraphData) return
-
-//   setGraphData(prev => ({
-//     // keep the same nodes array
-//     nodes: prev.nodes,
-//     // drop any link whose source+target+value all match the one to remove
-//     links: prev.links.filter(
-//       l =>
-//         !(
-//           l.source === linkToRemove.source &&
-//           l.target === linkToRemove.target &&
-//           l.value === linkToRemove.value
-//         )
-//     ),
-//   }))
-// }
 
   return (
     <div

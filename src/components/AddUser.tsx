@@ -1,14 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-
-type Node = { id: string; group: number };
-type Link = { source: string; target: string; value: number };
+import { Links, Node } from "@/types/Nodes"
 
 type AddUserProps = {
   isOpen: boolean;
   onClose: () => void;
-  setGraphData: React.Dispatch<React.SetStateAction<{ nodes: Node[]; links: Link[] }>>;
+  setGraphData: React.Dispatch<React.SetStateAction<{ nodes: Node[]; links: Links[] }>>;
 };
 
 export default function AddUser({ isOpen, onClose, setGraphData }: AddUserProps) {

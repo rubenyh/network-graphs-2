@@ -1,17 +1,15 @@
 'use client';
 
 import React from 'react'
-import UserInfo from '../../components/userInfo'
-
-type Node = { id: string; group: number }
-type Link = { source: string; target: string; value: number }
+import UserInfo from './userInfo'
+import { Links, Node } from "@/types/Nodes"
 
 type PageProps = {
   isOpen: boolean;
   onClose: () => void;
-  graphData: { nodes: Node[]; links: Link[] }
+  graphData: { nodes: Node[]; links: Links[] }
   setGraphData?: React.Dispatch<
-    React.SetStateAction<{ nodes: Node[]; links: Link[] }>
+    React.SetStateAction<{ nodes: Node[]; links: Links[] }>
   >
   children?: React.ReactNode;
 };
