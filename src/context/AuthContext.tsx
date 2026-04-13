@@ -10,7 +10,7 @@ import {
 	signInWithPopup,
 	signOut as firebaseSignOut,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase/config";
+import { getFirebaseAuth } from "@/lib/firebase/config";
 
 type AuthContextValue = {
 	user: User | null;
@@ -26,6 +26,7 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
+    const auth = getFirebaseAuth()
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, currentUser => {

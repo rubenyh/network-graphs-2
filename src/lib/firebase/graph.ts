@@ -1,9 +1,10 @@
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import type { Links, Node } from "@/types/Nodes";
-import { db } from "@/lib/firebase/config";
+import { getFirebaseDB } from "@/lib/firebase/config";
 
 export type GraphData = { nodes: Node[]; links: Links[] };
 
+const db = getFirebaseDB()
 const graphDocRef = (uid: string) => doc(db, "users", uid);
 
 export async function fetchGraph(uid: string): Promise<GraphData | null> {
