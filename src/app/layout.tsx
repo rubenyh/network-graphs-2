@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Itim } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 
 const itim = Itim({
   weight: "400",
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={itim.variable}>
       <body className={`${itim.className} antialiased`}>
-      {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
