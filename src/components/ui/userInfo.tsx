@@ -34,7 +34,14 @@ const UserInfo: React.FC<UserInfoProps> = ({node, graphData, setGraphData}) =>{
           </div>
         </div>
       </div>
-      <Modify isOpen3={isOpen3} onClose={() => setOpen3(false)} graphData={graphData} node={node}key={node.id}/>
+      <Modify
+        isOpen3={isOpen3}
+        onClose={() => setOpen3(false)}
+        graphData={graphData}
+        setGraphData={setGraphData}
+        node={node}
+        key={node.id}
+      />
     </>
   )
 }
