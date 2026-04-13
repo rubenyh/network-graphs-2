@@ -1,4 +1,4 @@
-# Representatation of relationships between users
+# Representation of relationships between users
 This project show the visual representation between people using nodes
 
 ## Firebase setup
